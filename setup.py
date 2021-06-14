@@ -10,7 +10,7 @@ else:
 
 setuptools.setup(
     name='selenium_chrome',
-    version='0.0.11',
+    version='0.0.12',
     author='Kristóf-Attila Kovács',
     description='selenium_chrome',
     long_description=long_description,
@@ -21,7 +21,7 @@ setuptools.setup(
         'kproxy>=0.0.1',
         'noraise>=0.0.16',
         'selenium>=3.141.0',
-        'selenium-browser>=0.0.11',
+        'selenium-browser>=0.0.12',
         'undetected-chromedriver>=3.0.1',
         'xpath-utils>=0.0.2'
     ],
