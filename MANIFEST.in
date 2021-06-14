@@ -1,1 +1,2 @@
-include selenium_chrome/chrome_addons/builtin_addon_install_settings/resources
+include selenium_chrome/chrome_addons/builtin_addon_install_settings/resources/foxy_proxy/*
+include selenium_chrome/chrome_addons/builtin_addon_install_settings/resources/ubllock_origin/*
