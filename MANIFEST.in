@@ -1,1 +1,1 @@
-include selenium_chrome/chrome_addons/builtin_addon_install_settings/resources/*
+recursive-include selenium_chrome/chrome_addons/builtin_addon_install_settings/resources/*
