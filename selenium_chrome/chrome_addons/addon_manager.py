@@ -46,8 +46,13 @@ class AddonManager:
         self,
         options: ChromeOptions
     ) -> ChromeOptions:
-        for addon in self.addons:
-            options.add_extension(addon.path)
+        options.add_argument(
+            '--load-extension={}'.format(
+                ','.join([
+                    addon.path for addon in self.addons
+                ])
+            )
+        )
 
         return options
 
@@ -55,8 +60,17 @@ class AddonManager:
         self,
         chrome # Chrome
     ) -> None:
+        org_handle = chrome.driver.current_window_handle
+
         for addon in self.addons:
             addon.post_install_action(chrome)
+
+        for handle in chrome.window_handles:
+            if handle != org_handle:
+                chrome.switch_to_window(handle)
+                chrome.close()
+
+        chrome.switch_to_window(org_handle)
 
 
 # -------------------------------------------------------------------------------------------------------------------------------- #

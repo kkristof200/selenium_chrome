@@ -26,9 +26,6 @@ class BuiltinAddonInstallSettings(ChromeAddonInstallSettings):
     # --------------------------------------------------------- Init --------------------------------------------------------- #
 
     def __init__(self):
-        if not self._name.endswith('.crx'):
-            self._name += '.crx'
-
         super().__init__(
             os.path.join(
                 os.path.dirname(os.path.abspath(__file__)),

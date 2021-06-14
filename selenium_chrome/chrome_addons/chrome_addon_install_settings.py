@@ -15,7 +15,7 @@ class ChromeAddonInstallSettings(AddonInstallSettings):
 
     def __init__(
         self,
-        path: str,
+        path: str, # path to extracted extension folder, NOT .crx (this is a limitation by undetected-chromedriver)
         addon_id: str
     ):
         super().__init__(path)
