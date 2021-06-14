@@ -10,7 +10,7 @@ else:
 
 setuptools.setup(
     name='selenium_chrome',
-    version='0.0.5',
+    version='0.0.6',
     author='Kristóf-Attila Kovács',
     description='selenium_chrome',
     long_description=long_description,
@@ -36,4 +36,5 @@ setuptools.setup(
         'Operating System :: OS Independent',
     ],
     python_requires='>=3.4',
+    include_package_data=True
 )
