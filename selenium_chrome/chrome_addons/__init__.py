@@ -1,0 +1,7 @@
+from .foxy_proxy_addon_settings import FoxyProxyAddonSettings
+from .ublock_origin_addon_settings import UBlockOriginAddonSettings
+
+from .builtin_addon_install_settings import BuiltinAddonInstallSettings
+from .chrome_addon_install_settings import ChromeAddonInstallSettings
+
+from .addon_manager import AddonManager
