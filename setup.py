@@ -10,7 +10,7 @@ else:
 
 setuptools.setup(
     name='selenium_chrome',
-    version='0.0.15',
+    version='0.0.16',
     author='Kristóf-Attila Kovács',
     description='selenium_chrome',
     long_description=long_description,
