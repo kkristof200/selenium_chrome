@@ -11,8 +11,6 @@ from undetected_chromedriver.v2 import ChromeOptions
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
-import geckodriver_autoinstaller
-
 # Local
 from .__constants import Constants
 
@@ -25,29 +23,6 @@ from .__constants import Constants
 class Utils:
 
     # ---------------------------------------------------- Public methods ---------------------------------------------------- #
-
-    @staticmethod
-    def get_firefox_binary(
-        path: Optional[str] = None
-    ) -> Optional[FirefoxBinary]:
-        return FirefoxBinary(firefox_path=path) if path and os.path.exists(path) else None
-
-    @classmethod
-    def get_geckodriver_path(
-        cls,
-        user_passed_geckodriver_path: Optional[str] = None
-    ) -> Optional[str]:
-
-        if user_passed_geckodriver_path and os.path.exists(user_passed_geckodriver_path):
-            return user_passed_geckodriver_path
-        elif not cls.is_geckodriver_installed():
-            return geckodriver_autoinstaller.install()
-
-        return None
-
-    @staticmethod
-    def is_geckodriver_installed() -> bool:
-        return subprocess.getstatusoutput('geckodriver -V')[0] == 0
 
     @staticmethod
     def proxy(
