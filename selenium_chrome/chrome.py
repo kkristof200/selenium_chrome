@@ -68,6 +68,7 @@ class Chrome(Browser):
            webdriver_class: override class used to create webdriver (for example: seleniumwire.webdriver.Chrome), Defaults to: 'undetected_chromedriver.v2.Chrome'
         '''
 
+        proxy = BrowserUtils.proxy(proxy)
         profile_path, cookies_folder_path, user_agent_file_path = BrowserUtils.get_cache_paths(profile_path, profile_id)
         os.makedirs(cookies_folder_path, exist_ok=True)
 
