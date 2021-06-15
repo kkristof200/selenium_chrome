@@ -79,7 +79,7 @@ class Utils:
             options.add_argument('--proxy-server=http://{}'.format(proxy.string))
 
         if profile_path:
-            options.add_argument('--user-data-dir={}'.format(profile_path))
+            options.user_data_dir = profile_path
 
         if screen_size:
             options.add_argument('--window-size={},{}'.format(screen_size[0], screen_size[1]))
