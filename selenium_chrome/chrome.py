@@ -2,19 +2,17 @@
 
 # System
 from typing import Optional, Union, List, Tuple
-import os, shutil, time
+import os
 
 # Pip
 from undetected_chromedriver.v2 import Chrome as ChromeDriver
 
-from noraise import noraise
 from kproxy import Proxy
 from selenium_browser import Browser, Utils as BrowserUtils
 
 # Local
 from .chrome_addons import AddonManager, FoxyProxyAddonSettings, ChromeAddonInstallSettings
 
-from .__constants import Constants
 from .__utils import Utils
 
 # -------------------------------------------------------------------------------------------------------------------------------- #
@@ -59,10 +57,12 @@ class Chrome(Browser):
         home_page_url: Optional[str] = None,
 
         # selenium-wire support
-        webdriver_class: Optional = None,
+        webdriver_class = None,
 
         # find function
-        default_find_func_timeout: int = 2.5
+        default_find_func_timeout: int = 2.5,
+        
+        update_chromedriver: bool = False
     ):
         '''EITHER PROVIDE 'profile_id' OR  'profile_path'.
            webdriver_class: override class used to create webdriver (for example: seleniumwire.webdriver.Chrome), Defaults to: 'undetected_chromedriver.v2.Chrome'
@@ -78,26 +78,37 @@ class Chrome(Browser):
 
         if proxy and proxy.needs_auth:
             am.add_addon(FoxyProxyAddonSettings())
+        
+        webdriver_kwargs = {
+            'options': am.add_addons_to_options(
+                Utils.options(
+                    user_agent=BrowserUtils.user_agent(
+                        user_agent=user_agent,
+                        file_path=user_agent_file_path
+                    ),
+                    language=language,
+                    private=private,
+                    disable_images=disable_images,
+                    mute_audio=mute_audio,
+                    proxy=proxy if proxy and not proxy.needs_auth else None,
+                    profile_path=profile_path,
 
-        options = am.add_addons_to_options(
-            Utils.options(
-                user_agent=BrowserUtils.user_agent(
-                    user_agent=user_agent,
-                    file_path=user_agent_file_path
-                ),
-                language=language,
-                private=private,
-                disable_images=disable_images,
-                mute_audio=mute_audio,
-                proxy=proxy if proxy and not proxy.needs_auth else None,
-                profile_path=profile_path,
-
-                screen_size=screen_size or (1920,1080),
-                full_screen=full_screen,
-                headless=headless,
-                home_page_url=home_page_url
+                    screen_size=screen_size or (1920,1080),
+                    full_screen=full_screen,
+                    headless=headless,
+                    home_page_url=home_page_url
+                )
             )
+        }
+
+        chromedriver_main_version = Utils.get_chromedriver_main_version(
+            webdriver_class,
+            chromedriver_path=chromedriver_path,
+            update_chromedriver=update_chromedriver
         )
+
+        if chromedriver_main_version is not None:
+            webdriver_kwargs['version_main'] = chromedriver_main_version
 
         super().__init__(
             webdriver_class or ChromeDriver,
@@ -106,7 +117,7 @@ class Chrome(Browser):
             proxy=proxy,
             default_find_func_timeout=default_find_func_timeout,
             webdriver_executable_path=chromedriver_path,
-            options=options
+            **webdriver_kwargs
         )
 
         am.run_post_install_calls(self)

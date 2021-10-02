@@ -1,18 +1,15 @@
 # ------------------------------------------------------------ Imports ----------------------------------------------------------- #
 
 # System
-from  typing import Optional, Dict, Tuple, Union, List
-import json, os, tempfile, platform, subprocess
+from  typing import Optional, Tuple, Union
+import os, subprocess
 
 # Pip
 from kproxy import Proxy
 
-from undetected_chromedriver.v2 import ChromeOptions
 from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
-# Local
-from .__constants import Constants
+from undetected_chromedriver.v2 import Chrome as ChromeDriver
 
 # -------------------------------------------------------------------------------------------------------------------------------- #
 
@@ -23,7 +20,24 @@ from .__constants import Constants
 class Utils:
 
     # ---------------------------------------------------- Public methods ---------------------------------------------------- #
+    
+    @staticmethod
+    def get_chromedriver_main_version(
+        chromedriver_class,
+        chromedriver_path: Optional[str],
+        update_chromedriver: bool
+    ) -> Optional[int]:
+        if update_chromedriver and (chromedriver_class != ChromeDriver or not chromedriver_path or not os.path.exists(chromedriver_path)):
+            return None
 
+        try:
+            version_response = subprocess.getoutput(f'"{chromedriver_path}" --version')
+
+            return int(version_response.split(' ', 1)[1].split('.')[0])
+        except:
+            return None
+        
+        
     @staticmethod
     def proxy(
         proxy: Optional[Union[Proxy, str]] = None,
