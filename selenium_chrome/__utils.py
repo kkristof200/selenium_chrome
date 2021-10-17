@@ -70,6 +70,7 @@ class Utils:
         home_page_url: Optional[str] = None
     ) -> ChromeOptions:
         options = ChromeOptions()
+        options.add_argument('--disable-popup-blocking')
         options.add_argument('--no-first-run --no-service-autorun --password-store=basic')
         prefs = {}
 
