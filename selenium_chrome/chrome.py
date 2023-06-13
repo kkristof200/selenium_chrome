@@ -27,7 +27,7 @@ class Chrome(Browser):
 
     def __init__(
         self,
-        
+
         # profile
         profile_path: Optional[str] = None,
         profile_id: Optional[str] = None,
